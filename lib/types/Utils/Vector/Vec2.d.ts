@@ -1,8 +1,8 @@
 import { Vector } from "./Vector";
-export declare const vec2: (x?: number, y?: number) => Vec2;
 export declare class Vec2 implements Vector {
     x: number;
     y: number;
+    readonly dims: number;
     constructor(x?: number, y?: number);
     add(v: Vec2): Vec2;
     sub(v: Vec2): Vec2;

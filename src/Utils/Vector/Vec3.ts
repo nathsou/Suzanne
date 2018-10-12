@@ -1,57 +1,17 @@
 import { Vector, EPS } from "./Vector";
-import { Vec2 } from "./Vec2";
-import { Vec4 } from "./Vec4";
-import { VecN } from "./VecN";
-
-export function vec3(x: number, y: number, z: number): Vec3;
-export function vec3(x: number, y: number): Vec3;
-export function vec3(x: number): Vec3;
-export function vec3(): Vec3;
-export function vec3(v: Vec3 | Vec4 | VecN): Vec3;
-
-export function vec3(...args: number[] | [Vec2 | Vec4 | VecN]): Vec3 {
-    switch (args.length) {
-        case 0:
-            return new Vec3(0, 0, 0);
-
-        case 1:
-            if (typeof args[0] === 'number') {
-                return new Vec3(args[0], args[0], args[0]);
-            }
-
-            if (args[0] instanceof Vec2) {
-                return new Vec4(args[0].x, args[0].y, 0);
-            }
-
-            if (args[0] instanceof Vec4) {
-                return new Vec3(args[0].x, args[0].y, args[0].z);
-            }
-
-            if (args[0] instanceof VecN) {
-                const [x, y, z] = args[0].values;
-                return new Vec3(x, y, z);
-            }
-
-            throw new Error(`Unexpected vec3 argument: ${args[0]}`);
-
-        case 2:
-            return new Vec3(args[0] as number, args[1] as number, 0);
-
-        default:
-            return new Vec3(args[0] as number, args[1] as number, args[2] as number);
-    }
-}
 
 export class Vec3 implements Vector {
 
     public x: number;
     public y: number;
     public z: number;
+    public readonly dims: number;
 
     constructor(x = 0, y = 0, z = 0) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.dims = 3;
     }
 
     public add(v: Vec3): Vec3 {

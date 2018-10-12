@@ -29,7 +29,8 @@ export interface Vertex {
 }
 
 export interface FragmentVertex {
-    ndc: Vec4,
-    varyings: Readonly<VaryingList>,
-    index: number
+    // normalized device coordinates
+    readonly ndc: Vec4,
+    readonly varyings: Readonly<VaryingList>,
+    readonly index: number
 }

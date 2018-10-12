@@ -1,7 +1,7 @@
 import { Vector } from "../Utils/Vector/Vector";
 import { FragmentVertex } from "../Vertex";
 import { VertexArray } from "../VertexArray";
-import { VaryingInterpolator, VaryingGradient } from "./VaryingInterpolator";
+import { VaryingGradient, VaryingInterpolator } from "./VaryingInterpolator";
 export declare class VaryingInterpolator3 extends VaryingInterpolator {
     private _inv_dx;
     private _inv_dy;

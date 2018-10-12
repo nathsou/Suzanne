@@ -1,5 +1,4 @@
 const path = require('path');
-const dist = path.resolve(__dirname, 'dist');
 
 module.exports = {
     entry: './src/index.ts',
@@ -9,6 +8,8 @@ module.exports = {
             use: 'ts-loader',
             exclude: [
                 /node_modules/,
+                /lib/,
+                /dist/
             ]
         }]
     },
@@ -17,8 +18,8 @@ module.exports = {
     },
     output: {
         filename: 'suzanne.js',
-        path: dist,
-        library: 'suzanne',
+        path: path.join(__dirname, 'dist'),
+        library: 'suz',
         libraryTarget: 'umd',
         globalObject: "(typeof window !== 'undefined' ? window : this)"
     },

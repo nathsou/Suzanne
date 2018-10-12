@@ -1,5 +1,4 @@
 import { Vector } from "./Vector";
-export declare const vecn: (...values: number[]) => VecN;
 export declare class VecN implements Vector {
     private _values;
     private _dims;
@@ -17,4 +16,12 @@ export declare class VecN implements Vector {
     equals(v: VecN, eps?: number): boolean;
     readonly dims: number;
     values: Float32Array;
+    r: number;
+    x: number;
+    g: number;
+    y: number;
+    b: number;
+    z: number;
+    a: number;
+    w: number;
 }

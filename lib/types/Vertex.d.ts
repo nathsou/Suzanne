@@ -23,7 +23,7 @@ export interface Vertex {
     varyings: VaryingList;
 }
 export interface FragmentVertex {
-    ndc: Vec4;
-    varyings: Readonly<VaryingList>;
-    index: number;
+    readonly ndc: Vec4;
+    readonly varyings: Readonly<VaryingList>;
+    readonly index: number;
 }

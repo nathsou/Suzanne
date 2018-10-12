@@ -1,11 +1,12 @@
 {
   "name": "suzanne",
   "main": "dist/suzanne.js",
-  "version": "0.0.1",
+  "module": "lib/js/index.js",
+  "types": "lib/types/index.d.ts",
+  "version": "0.0.2",
   "description": "3D Software Renderer",
-  "types": "./dist/defs/index.d.ts",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "tsc && webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

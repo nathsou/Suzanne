@@ -3,14 +3,15 @@
         "module": "es6",
         "target": "es6",
         "declaration": true,
-        "declarationDir": "./dist/defs",
-        "outDir": "./dist",
+        "declarationDir": "./lib/types",
+        "outDir": "./lib/js",
         "sourceMap": false,
         "noImplicitAny": true,
         "strict": false,
     },
     "exclude": [
         "node_modules",
+        "lib",
         "dist"
     ]
 }

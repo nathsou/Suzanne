@@ -16,7 +16,7 @@ export enum DrawingMode {
     TRIANGLES
 }
 
-export interface Canvas3DOptions {
+export interface ContextOptions {
     depth_test: boolean,
     backface_culling: boolean
 }
@@ -26,34 +26,34 @@ export interface RenderingTarget {
     draw(bitmap: Bitmap): void;
 }
 
-export class Canvas3D extends Bitmap {
+export class Context extends Bitmap {
 
-    private _ctx: RenderingTarget;
+    private _target: RenderingTarget;
     private _screen_space_matrix: Matrix4;
     private _vertex_array: VertexArray;
     private _current_gradient: VaryingInterpolator;
     private _current_varyings: VaryingList;
     private _current_varying_names: string[];
     private _program: Program;
-    private _options: Canvas3DOptions;
+    private _options: ContextOptions;
     private _depth_buffer: Float32Array;
 
-    constructor(width: number, height: number, ctx: RenderingTarget, options?: Partial<Canvas3DOptions>) {
+    constructor(width: number, height: number, target: RenderingTarget, options?: Partial<ContextOptions>) {
         super(width, height);
-        this._ctx = ctx;
+        this._target = target;
         this._initOptions(options);
         this._screen_space_matrix = Matrix4.screenSpace(width, height);
     }
 
-    private _initOptions(optns: Partial<Canvas3DOptions> = {}): void {
+    private _initOptions(optns: Partial<ContextOptions> = {}): void {
         this._options = {
             depth_test: true,
             backface_culling: true,
             ...optns
         };
 
-        if (this._ctx.init !== undefined) {
-            this._ctx.init(this._width, this._height);
+        if (this._target.init !== undefined) {
+            this._target.init(this._width, this._height);
         }
 
         if (this._options.depth_test) {
@@ -358,10 +358,10 @@ export class Canvas3D extends Bitmap {
     }
 
     public draw(): void {
-        this._ctx.draw(this);
+        this._target.draw(this);
     }
 
-    public get options(): Canvas3DOptions {
+    public get options(): ContextOptions {
         return this._options;
     }
 }

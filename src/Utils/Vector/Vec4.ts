@@ -1,62 +1,4 @@
 import { Vector, EPS } from "./Vector";
-import { Vec3 } from "./Vec3";
-import { Vec2 } from "./Vec2";
-import { VecN } from "./VecN";
-
-export function vec4(x: number, y: number, z: number, w: number): Vec4;
-export function vec4(x: number, y: number, z: number): Vec4;
-export function vec4(x: number, y: number): Vec4;
-export function vec4(x: number): Vec4;
-export function vec4(v: Vec2 | Vec3 | VecN): Vec4;
-export function vec4(v: Vec3, w: number): Vec4;
-
-export function vec4(...args: number[] | [Vec2 | Vec3 | VecN] | [Vec3, number]): Vec4 {
-
-    switch (args.length) {
-        case 0:
-            return new Vec4(0, 0, 0, 0);
-
-        case 1:
-            if (typeof args[0] === 'number') {
-                return new Vec4(args[0], args[0], args[0], args[0]);
-            }
-
-            if (args[0] instanceof Vec3) {
-                return new Vec4(args[0].x, args[0].y, args[0].z, 1);
-            }
-
-            if (args[0] instanceof Vec2) {
-                return new Vec4(args[0].x, args[0].y, args[0].x, args[0].y);
-            }
-
-            if (args[0] instanceof Vec4) {
-                return new Vec4(args[0].x, args[0].y, args[0].z, args[0].w);
-            }
-
-            if (args[0] instanceof VecN) {
-                const [x, y, z, w] = args[0].values;
-                return new Vec4(x, y, z, w);
-            }
-
-            throw new Error(`Unexpected vec4 argument: ${args[0]}`);
-
-        case 2:
-            if (args[0] instanceof Vec3) {
-                const v = args[0];
-                return new Vec4(v.x, v.y, v.z, args[1] as number);
-            } else {
-                const [x, y] = args as number[];
-                return new Vec4(x, y, x, y);
-            }
-
-        case 3:
-            return new Vec4(args[0] as number, args[1] as number, args[2] as number, 1);
-
-        default:
-            return new Vec4(args[0] as number, args[1] as number, args[2] as number, args[3] as number);
-    }
-}
-
 
 export class Vec4 implements Vector {
 
@@ -64,12 +6,14 @@ export class Vec4 implements Vector {
     public y: number;
     public z: number;
     public w: number;
+    public readonly dims: number;
 
     constructor(x = 0, y = 0, z = 0, w = 1) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.w = w;
+        this.dims = 4;
     }
 
     public add(v: Vec4): Vec4 {

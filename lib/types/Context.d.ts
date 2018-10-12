@@ -6,7 +6,7 @@ export declare enum DrawingMode {
     LINES = 1,
     TRIANGLES = 2
 }
-export interface Canvas3DOptions {
+export interface ContextOptions {
     depth_test: boolean;
     backface_culling: boolean;
 }
@@ -14,8 +14,8 @@ export interface RenderingTarget {
     init?(width: number, height: number): void;
     draw(bitmap: Bitmap): void;
 }
-export declare class Canvas3D extends Bitmap {
-    private _ctx;
+export declare class Context extends Bitmap {
+    private _target;
     private _screen_space_matrix;
     private _vertex_array;
     private _current_gradient;
@@ -24,7 +24,7 @@ export declare class Canvas3D extends Bitmap {
     private _program;
     private _options;
     private _depth_buffer;
-    constructor(width: number, height: number, ctx: RenderingTarget, options?: Partial<Canvas3DOptions>);
+    constructor(width: number, height: number, target: RenderingTarget, options?: Partial<ContextOptions>);
     private _initOptions;
     private _perspectiveTransform;
     private _shouldDrawFragment;
@@ -45,5 +45,5 @@ export declare class Canvas3D extends Bitmap {
     private _clearDepthBuffer;
     clearBuffers(): void;
     draw(): void;
-    readonly options: Canvas3DOptions;
+    readonly options: ContextOptions;
 }

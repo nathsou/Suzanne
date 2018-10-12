@@ -1,18 +1,10 @@
 import { Vector } from "./Vector";
-import { Vec3 } from "./Vec3";
-import { Vec2 } from "./Vec2";
-import { VecN } from "./VecN";
-export declare function vec4(x: number, y: number, z: number, w: number): Vec4;
-export declare function vec4(x: number, y: number, z: number): Vec4;
-export declare function vec4(x: number, y: number): Vec4;
-export declare function vec4(x: number): Vec4;
-export declare function vec4(v: Vec2 | Vec3 | VecN): Vec4;
-export declare function vec4(v: Vec3, w: number): Vec4;
 export declare class Vec4 implements Vector {
     x: number;
     y: number;
     z: number;
     w: number;
+    readonly dims: number;
     constructor(x?: number, y?: number, z?: number, w?: number);
     add(v: Vec4): Vec4;
     sub(v: Vec4): Vec4;

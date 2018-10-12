@@ -1,11 +1,11 @@
-import { Vec2, vec2 } from "./Vec2";
-import { Vec3, vec3 } from "./Vec3";
-import { Vec4, vec4 } from "./Vec4";
-import { vecn, VecN } from "./VecN";
+import { vec } from "./VecShorthands";
 
 export const EPS = 10 ** - 6;
 
 export interface Vector {
+    x: number;
+    y: number;
+    dims: number;
     add(v: Vector): Vector;
     sub(v: Vector): Vector;
     mul(v: Vector): Vector;
@@ -17,28 +17,6 @@ export interface Vector {
     reflect(N: Vector): Vector;
     addTimes(v: Vector, k: number): Vector;
     equals(v: Vector, eps: number): boolean;
-}
-
-export function vec(x: number): VecN;
-export function vec(x: number, y: number): Vec2;
-export function vec(x: number, y: number, z: number): Vec3;
-export function vec(x: number, y: number, z: number, w: number): Vec4;
-export function vec(...values: number[]): VecN;
-
-export function vec(...values: number[]): Vector {
-    switch (values.length) {
-        case 2:
-            return vec2(values[0], values[1]);
-
-        case 3:
-            return vec3(values[0], values[1], values[2]);
-
-        case 4:
-            return vec4(values[0], values[1], values[2], values[3]);
-
-        default:
-            return vecn(...values);
-    }
 }
 
 type Swizzled<T extends Vector> = {

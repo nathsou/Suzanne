@@ -1,9 +1,5 @@
 import { Vec3 } from "./Vector/Vec3";
 import { Vec4 } from "./Vector/Vec4";
-export declare function mat4(s: number): Matrix4;
-export declare function mat4(coeffs: Float32Array): Matrix4;
-export declare function mat4(...coeffs: number[]): Matrix4;
-export declare function mat4(row_1: Vec4, row_2: Vec4, row_3: Vec4, row_4: Vec4): Matrix4;
 export declare class Matrix4 {
     private _m;
     constructor(coeffs?: Float32Array);

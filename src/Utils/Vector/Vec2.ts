@@ -1,47 +1,47 @@
 import { Vector, EPS } from "./Vector";
 
-export const vec2 = (x = 0, y = 0) => new Vec2(x, y);
-
 export class Vec2 implements Vector {
 
     public x: number;
     public y: number;
+    public readonly dims: number;
 
     constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
+        this.dims = 2;
     }
 
     public add(v: Vec2): Vec2 {
-        return vec2(
+        return new Vec2(
             this.x + v.x,
             this.y + v.y
         );
     }
 
     public sub(v: Vec2): Vec2 {
-        return vec2(
+        return new Vec2(
             this.x - v.x,
             this.y - v.y
         );
     }
 
     public mul(v: Vec2): Vec2 {
-        return vec2(
+        return new Vec2(
             this.x * v.x,
             this.y * v.y
         );
     }
 
     public times(k: number): Vec2 {
-        return vec2(
+        return new Vec2(
             this.x * k,
             this.y * k
         );
     }
 
     public div(v: Vec2): Vec2 {
-        return vec2(
+        return new Vec2(
             this.x / v.x,
             this.y / v.y
         );
@@ -64,7 +64,7 @@ export class Vec2 implements Vector {
     }
 
     public addTimes(v: Vec2, k: number): Vector {
-        return vec2(
+        return new Vec2(
             this.x + v.x * k,
             this.y + v.y * k
         );
