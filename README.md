@@ -3,6 +3,8 @@
 
 ![Wooden Suzanne](res/wooden_suzanne.png)
 
+[See demos](https://github.com/nathsou/SuzanneDemos/)
+
 ## Features 🐵
 
     - Programmable Vertex and Fragment shaders
@@ -20,10 +22,11 @@
 
 ## Todo 🙊
 
-    - Implement clipping
-    - Support .mtl files
-    - Improve performance
-    - Antialiasing
+- [ ] Implement clipping
+- [ ] Support .mtl files
+- [ ] Improve performance
+- [ ] Antialiasing
+- [ ] Mipmapping
 
 # Usage 🍌
 
@@ -43,6 +46,12 @@ const suz = require('suzanne');
 
 ```html
 <script src='./node_modules/suzanne/dist/suzanne.js'></script>
+```
+
+### Webpack, Parcel...
+
+```javascript
+import { Context, VertexArray, ... } from 'suzanne';
 ```
 
 ### Basic example
@@ -89,7 +98,7 @@ sz.useProgram({
         // interpolate the color attribute
         vertex.varyings.color = vertex.attributes.color;
 
-        // return our transformed vertex's position
+        // return our transformed vertex position
         return vertex.uniforms.mvp.transform(vertex.position);
     },
     fragment_shader: (varyings, uniforms) => {
@@ -113,3 +122,8 @@ sz.draw();
 ### Result - A magnificent colored triangle 🔻
 
 ![Colored triangle](res/tri.png)
+
+### Going further
+
+
+[https://github.com/nathsou/SuzanneDemos/](https://github.com/nathsou/SuzanneDemos/)

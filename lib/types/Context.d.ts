@@ -12,6 +12,7 @@ export interface ContextOptions {
 }
 export interface RenderingTarget {
     init?(width: number, height: number): void;
+    resize?(width: number, height: number): void;
     draw(bitmap: Bitmap): void;
 }
 export declare class Context extends Bitmap {
@@ -20,11 +21,11 @@ export declare class Context extends Bitmap {
     private _vertex_array;
     private _current_gradient;
     private _current_varyings;
-    private _current_varying_names;
     private _program;
     private _options;
     private _depth_buffer;
     constructor(width: number, height: number, target: RenderingTarget, options?: Partial<ContextOptions>);
+    private initDepthBuffer;
     private _initOptions;
     private _perspectiveTransform;
     private _shouldDrawFragment;
@@ -46,4 +47,5 @@ export declare class Context extends Bitmap {
     clearBuffers(): void;
     draw(): void;
     readonly options: ContextOptions;
+    resize(width: number, height: number): void;
 }

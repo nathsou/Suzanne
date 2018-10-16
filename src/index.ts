@@ -8,7 +8,7 @@ export * from './Utils/ColorUtils';
 export * from './Utils/MathUtils';
 export * from './Utils/Matrix4';
 export * from './Utils/ModelLoader';
-export * from './Utils/TextureUtils';
+export * from './Texture';
 export * from './Utils/Vector/Vec2';
 export * from './Utils/Vector/Vec3';
 export * from './Utils/Vector/Vec4';

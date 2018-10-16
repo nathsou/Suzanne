@@ -3,19 +3,20 @@
   "main": "dist/suzanne.js",
   "module": "lib/js/index.js",
   "types": "lib/types/index.d.ts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "3D Software Renderer",
   "scripts": {
     "build": "tsc && webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "tsc -w"
   },
   "devDependencies": {
-    "@types/node": "^10.11.7",
-    "typescript": "^3.1.1",
-    "ts-loader": "^5.2.1",
-    "file-loader": "^2.0.0",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.1"
+    "@types/node": "~10.11.7",
+    "typescript": "~3.1.3",
+    "ts-loader": "~5.2.1",
+    "file-loader": "~2.0.0",
+    "webpack": "~4.20.2",
+    "webpack-cli": "~3.1.2"
   },
   "keywords": [
     "Suzanne",

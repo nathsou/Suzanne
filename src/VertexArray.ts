@@ -9,7 +9,8 @@ export class VertexArray {
     private _vertices: Vec3[];
     private _indices: UintArray;
     private _attributes: Map<keyof AttributeList, AttributeType[]>;
-    private _varyings: Map<keyof VaryingList, InterpolableType[]>
+    private _varyings: Map<keyof VaryingList, InterpolableType[]>;
+    private _varying_names: string[];
     private _uniforms: UniformList;
     private _attribute_accessor: Readonly<AttributeList>;
     private _varying_setter: VaryingList;
@@ -19,6 +20,8 @@ export class VertexArray {
         this._vertices = vertices;
         this._attributes = new Map<keyof AttributeList, AttributeType[]>();
         this._varyings = new Map<keyof VaryingList, InterpolableType[]>();
+        // cache varying names so we don't have to use a rather slow for...in loop
+        this._varying_names = [];
         this._uniforms = {};
         this._current_idx = 0;
 
@@ -42,6 +45,7 @@ export class VertexArray {
                     const array: InterpolableType[] = [];
                     array[this._current_idx] = val;
                     this._varyings.set(prop, array);
+                    this._varying_names.push(prop as string);
                 } else {
                     prop_varyings[this._current_idx] = val;
                 }
@@ -94,6 +98,10 @@ export class VertexArray {
         return this._varyings;
     }
 
+    public get varyingNames(): string[] {
+        return this._varying_names;
+    }
+
     public get uniforms(): Readonly<UniformList> {
         return this._uniforms;
     }
@@ -106,12 +114,16 @@ export class VertexArray {
 
         for (const attrib_name in model.attributes) {
             const attribute = model.attributes[attrib_name];
-            if (attribute !== undefined && attribute.length !== 0) {
+            if (attribute !== undefined) {
                 VAO.addAttribute(attrib_name, attribute);
             }
         }
 
         return VAO;
+    }
+
+    public get vertexCount(): number {
+        return this._vertices.length;
     }
 
 }

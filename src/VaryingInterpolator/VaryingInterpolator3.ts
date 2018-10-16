@@ -31,7 +31,7 @@ export class VaryingInterpolator3 extends VaryingInterpolator {
         const one_over_z_b = this._vertices[1].ndc.w as number;
         const one_over_z_c = this._vertices[2].ndc.w as number;
 
-        for (const name in this._vertices[0].varyings) {
+        for (const name of this._VAO.varyingNames) {
             const current_varyings = this._VAO.varyings.get(name);
 
             //apply perspective correct texture mapping:

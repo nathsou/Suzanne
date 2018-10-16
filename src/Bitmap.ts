@@ -9,9 +9,9 @@ export class Bitmap {
     protected _height: number;
 
     constructor(width: number, height: number) {
-        this._data = new Uint8ClampedArray(width * height * 4);
         this._width = width;
         this._height = height;
+        this._data = new Uint8ClampedArray(this._width * this._height * 4);
     }
 
     public clear(color = colors.black): void {
@@ -38,11 +38,17 @@ export class Bitmap {
         return this._height;
     }
 
+    public resize(width: number, height: number): void {
+        this._width = width;
+        this._height = height;
+        this._data = new Uint8ClampedArray(this._width * this._height * 4);
+    }
+
     public get data(): Uint8ClampedArray {
         return this._data;
     }
 
-    public at(x: number, y: number): Color {
+    public read(x: number, y: number): Color {
         const idx = (x + y * this._width) * 4;
         return new Vec4(
             this._data[idx] / 255,
@@ -50,42 +56,6 @@ export class Bitmap {
             this._data[idx + 2] / 255,
             this._data[idx + 3] / 255
         );
-    }
-
-    public static fromImageData(img: ImageData): Bitmap {
-        const bm = new Bitmap(img.width, img.height);
-        bm._data.set(img.data);
-
-        return bm;
-    }
-
-    public static fromImage(img: HTMLImageElement): Bitmap {
-        const ctx = document.createElement('canvas').getContext('2d');
-        ctx.canvas.width = img.width;
-        ctx.canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        return Bitmap.fromImageData(ctx.getImageData(0, 0, img.width, img.height));
-    }
-
-    public static fromFile(source: string): Promise<Bitmap> {
-        if (typeof window !== 'undefined') {
-            return new Promise<Bitmap>((resolve, reject) => {
-                const img = new Image();
-                img.onload = () => {
-                    resolve(Bitmap.fromImage(img));
-                };
-
-                img.onerror = () => {
-                    reject(source);
-                }
-
-                img.src = source;
-            });
-        } else {
-            ///@ts-ignore
-            console.log(__non_webpack_require__('fs'));
-            throw new Error('Bitmap.fromFile() not implemented for node yet');
-        }
     }
 
 }

@@ -23,6 +23,7 @@ export interface ContextOptions {
 
 export interface RenderingTarget {
     init?(width: number, height: number): void;
+    resize?(width: number, height: number): void;
     draw(bitmap: Bitmap): void;
 }
 
@@ -33,7 +34,6 @@ export class Context extends Bitmap {
     private _vertex_array: VertexArray;
     private _current_gradient: VaryingInterpolator;
     private _current_varyings: VaryingList;
-    private _current_varying_names: string[];
     private _program: Program;
     private _options: ContextOptions;
     private _depth_buffer: Float32Array;
@@ -43,6 +43,13 @@ export class Context extends Bitmap {
         this._target = target;
         this._initOptions(options);
         this._screen_space_matrix = Matrix4.screenSpace(width, height);
+    }
+
+    private initDepthBuffer(): void {
+        if (this._options.depth_test) {
+            this._depth_buffer = new Float32Array(this._width * this._height);
+            this._depth_buffer.fill(Infinity);
+        }
     }
 
     private _initOptions(optns: Partial<ContextOptions> = {}): void {
@@ -56,13 +63,11 @@ export class Context extends Bitmap {
             this._target.init(this._width, this._height);
         }
 
-        if (this._options.depth_test) {
-            this._depth_buffer = new Float32Array(this._width * this._height);
-            this._depth_buffer.fill(Infinity);
-        }
+        this.initDepthBuffer();
     }
 
     private _perspectiveTransform(u: Vertex): FragmentVertex {
+
         const res = this._program.vertex_shader(u);
         //convert from ndc to screen space
         const v = this._screen_space_matrix.transform(res);
@@ -97,7 +102,7 @@ export class Context extends Bitmap {
     }
 
 
-    // _current_varyings_name and _current_gradients must be set before calling _scanLine
+    // _current_gradients must be set before calling _scanLine
     private _scanLine(
         y: number,
         left: Edge,
@@ -120,8 +125,7 @@ export class Context extends Bitmap {
             this._current_gradient.stepX(ndc);
             z = 1 / (ndc.current as Vec4).w;
 
-            for (let i = 0; i < this._current_varying_names.length; i++) {
-                const name = this._current_varying_names[i];
+            for (const name of this._vertex_array.varyingNames) {
                 if (name === '__ndc') continue;
                 const varying = this._current_gradient.varyings.get(name);
                 // this._current_varyings[name] = interpolableAddTimes(v.current, v.x_step, z);
@@ -144,8 +148,7 @@ export class Context extends Bitmap {
 
     private _initVaryings(left: Edge, x_offset: number): void {
         // init all varyings to their interpolated value on the left edge
-        for (let i = 0; i < this._current_varying_names.length; i++) {
-            const name = this._current_varying_names[i];
+        for (const name of this._vertex_array.varyingNames) {
             const varying = this._current_gradient.varyings.get(name);
 
             // take the ceiling difference into account
@@ -240,10 +243,10 @@ export class Context extends Bitmap {
     private _drawTrianglesIndexed(first: number, count: number, stroke: boolean): void {
         const indices = this._vertex_array.indices;
 
-        for (let i = first; i < first + count; i += 3) {
-            const a = this._perspectiveTransform(this._vertex_array.at(indices[i]));
-            const b = this._perspectiveTransform(this._vertex_array.at(indices[i + 1]));
-            const c = this._perspectiveTransform(this._vertex_array.at(indices[i + 2]));
+        for (let i = first + count - 1; i >= 0; i -= 3) {
+            const a = this._perspectiveTransform(this._vertex_array.at(indices[i - 2]));
+            const b = this._perspectiveTransform(this._vertex_array.at(indices[i - 1]));
+            const c = this._perspectiveTransform(this._vertex_array.at(indices[i]));
             if (stroke) {
                 this._strokeTriangle(a, b, c);
             } else {
@@ -274,7 +277,6 @@ export class Context extends Bitmap {
 
         const gradient = new VaryingInterpolator3(a, b, c, this._vertex_array);
         this._current_gradient = gradient;
-        this._current_varying_names = [...this._current_gradient.varyings.keys()];
 
         const long = new Edge(a, c, gradient);
 
@@ -364,4 +366,14 @@ export class Context extends Bitmap {
     public get options(): ContextOptions {
         return this._options;
     }
+
+    public resize(width: number, height: number): void {
+        super.resize(width, height);
+        this.initDepthBuffer();
+        this._screen_space_matrix = Matrix4.screenSpace(width, height);
+        if (this._target.resize !== undefined) {
+            this._target.resize(width, height);
+        }
+    }
+
 }

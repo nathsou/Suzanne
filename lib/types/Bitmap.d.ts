@@ -9,9 +9,7 @@ export declare class Bitmap {
     protected _set(x: number, y: number, color: Color): void;
     readonly width: number;
     readonly height: number;
+    resize(width: number, height: number): void;
     readonly data: Uint8ClampedArray;
-    at(x: number, y: number): Color;
-    static fromImageData(img: ImageData): Bitmap;
-    static fromImage(img: HTMLImageElement): Bitmap;
-    static fromFile(source: string): Promise<Bitmap>;
+    read(x: number, y: number): Color;
 }

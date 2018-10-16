@@ -8,6 +8,7 @@ export declare class VertexArray {
     private _indices;
     private _attributes;
     private _varyings;
+    private _varying_names;
     private _uniforms;
     private _attribute_accessor;
     private _varying_setter;
@@ -19,6 +20,8 @@ export declare class VertexArray {
     indexed(): boolean;
     indices: UintArray;
     readonly varyings: Map<keyof VaryingList, InterpolableType[]>;
+    readonly varyingNames: string[];
     readonly uniforms: Readonly<UniformList>;
     static fromModel(model: VertexData): VertexArray;
+    readonly vertexCount: number;
 }
