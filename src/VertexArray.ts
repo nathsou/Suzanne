@@ -27,12 +27,13 @@ export class VertexArray {
 
         this._attribute_accessor = new Proxy({}, {
             get: (_, prop: keyof VaryingList) => {
-                const val = this._attributes.get(prop as string)[this._current_idx];
-                if (val === undefined) {
-                    throw new Error(`Undefined attribute: ${prop}`);
+                if (typeof (prop) === 'string' && prop !== 'inspect') {
+                    if (this._attributes.has(prop as string)) {
+                        return this._attributes.get(prop as string)[this._current_idx];
+                    } else {
+                        throw new Error(`Undefined attribute: ${prop}`);
+                    }
                 }
-
-                return val;
             }
         });
 

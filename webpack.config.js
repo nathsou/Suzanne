@@ -23,5 +23,5 @@ module.exports = {
         libraryTarget: 'umd',
         globalObject: "(typeof window !== 'undefined' ? window : this)"
     },
-    // devtool: 'source-map'
+    devtool: 'source-map'
 };

@@ -113,7 +113,7 @@ sz.bindVertexArray(VAO);
 sz.clear(suz.colors.black);
 
 // draw the triangle in indexed mode
-sz.drawElements(suz.DrawingMode.TRIANGLES, 0, triangle.indices.length, 0);
+sz.drawElements(suz.DrawingMode.TRIANGLES, 0, triangle.indices.length);
 
 // update the canvas
 sz.draw();
