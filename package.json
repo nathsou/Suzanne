@@ -3,7 +3,7 @@
   "main": "dist/suzanne.js",
   "module": "lib/js/index.js",
   "types": "lib/types/index.d.ts",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "3D Software Renderer",
   "scripts": {
     "build": "tsc && webpack --mode production",
